@@ -4,28 +4,41 @@ import codedraw.*;
 import codedraw.Event;
 
 import java.awt.*;
-import java.awt.event.MouseEvent;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.concurrent.BlockingDeque;
-import java.util.concurrent.BlockingQueue;
 
-public class Button extends GuiObject {
+public class Button extends GuiObject  {
   private Double x;
   private Double y;
   private Double width;
   private Double height;
   private String text;
   private ButtonState buttonState;
+  private Color normalColor;
+  private Color hoveredColor;
+  private Color clickedColor;
 
 
-  public Button(CodeDraw cd, Double x, Double y, Double width, Double height, String text) {
-
+  public Button(Double x, Double y, Double width, Double height, String text, Color normalColor, Color hoveredColor, Color clickedColor) {
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.text = text;
+    this.buttonState = buttonState;
+    this.normalColor = normalColor;
+    this.hoveredColor = hoveredColor;
+    this.clickedColor = clickedColor;
+  }
+
+  public Color getNormalColor() {
+    return normalColor;
+  }
+
+  public Color getHoveredColor() {
+    return hoveredColor;
+  }
+
+  public Color getClickedColor() {
+    return clickedColor;
   }
 
   public ButtonState getButtonState() {
@@ -77,6 +90,18 @@ public class Button extends GuiObject {
     this.text = text;
   }
 
+  public void setNormalColor(Color normalColor) {
+    this.normalColor = normalColor;
+  }
+
+  public void setHoveredColor(Color hoveredColor) {
+    this.hoveredColor = hoveredColor;
+  }
+
+  public void setClickedColor(Color clickedColor) {
+    this.clickedColor = clickedColor;
+  }
+
   public void setButtonState(ButtonState buttonState) {
     this.buttonState = buttonState;
   }
@@ -87,12 +112,21 @@ public class Button extends GuiObject {
     TextFormat format = cd.getTextFormat();
     format.setBold(true);
     if(buttonState == ButtonState.ClICKED) {
-      fillRectangle(cd);
+      fillRectangle(cd, this.getClickedColor());
     } else if(buttonState == ButtonState.HOVERED) {
-      cd.setColor(Color.blue);
-      fillRectangle(Color.blue);
+      cd.setColor(this.getHoveredColor());
+      fillRectangle(cd, this.getHoveredColor());
+      cd.setColor(Color.black);
+      cd.drawText(x + 10, y + 20, this.text);
+
+    } else if (buttonState == ButtonState.NORMAL) {
+      cd.setColor(this.getNormalColor());
+      cd.drawRectangle(this.x, this.y, this.width, this.height);
+
     }
     cd.drawText(x + 10, y + 20, this.text);
+    cd.drawRectangle(this.x, this.y, this.width, this.height);
+     format = cd.getTextFormat();
 
   }
 
@@ -104,8 +138,7 @@ public class Button extends GuiObject {
   }
 
 
-
-  @Override
+@Override
   public void fillRectangle(CodeDraw cd, Color color) {
     cd.setColor(color);
     cd.fillRectangle(this.x, this.y, this.width, this.height);
@@ -116,20 +149,22 @@ public class Button extends GuiObject {
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
 
     boolean isEventInsideButton = mouseX <= (this.x + this.width) && mouseX >= this.x && mouseY <= this.y + this.height && mouseY >= this.y;
-    while(isEventInsideButton) {
-      if (event.getClass() == MouseClickEvent.class) {
-        setButtonState(ButtonState.ClICKED);
-      } else if (event.getClass() == MouseMoveEvent.class) {
-        setButtonState(ButtonState.HOVERED);
-      }
-
+   if(isEventInsideButton) {
+     if (event.getClass() == MouseClickEvent.class) {
+       setButtonState(ButtonState.ClICKED);
+     } else if (event.getClass() == MouseMoveEvent.class) {
+       setButtonState(ButtonState.HOVERED);
+     }
+   } else { // isEventInsideButton !=
+     buttonState = ButtonState.NORMAL;
+   }
 
       if (this.buttonState == ButtonState.ClICKED) {
         this.executeMouseClickEvent();
       } else if (this.buttonState == ButtonState.HOVERED) {
         executeMouseMoveEvent();
       }
-    }
+
 
   }
 

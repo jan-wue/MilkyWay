@@ -20,7 +20,7 @@ public class App {
     // Instantiates a new CodeDraw window with the size of 600x600 pixel
     CodeDraw cd = new CodeDraw();
 
-    GuiObject clickButton = new Button(cd, 50.0, 200.0, 100.0, 200.22, "press me") {
+    GuiObject clickButton = new Button( 50.0, 200.0, 100.0, 200.22, "press me",Color.blue, Color.yellow, Color.green) {
       @Override
       public void executeMouseClickEvent() {
         GuiObject label = new Label(400.0, 100.0, 100.0, 200.0, "I got clicked");
@@ -33,7 +33,7 @@ public class App {
 
     };
 
-    GuiObject musicButton = new Button(cd, 400.00, 400.0, 100.0,  150.0, "play music") {
+    GuiObject musicButton = new Button( 400.00, 400.0, 100.0,  150.0, "play music", Color.blue, Color.BLACK, Color.yellow) {
       @Override
       public void executeMouseClickEvent() {
         String musicPath = "/home/jan/Documents/projects/milkyway/src/main/resources/testMusic.wav";
@@ -51,7 +51,7 @@ public class App {
 
       }
       public void executeMouseMoveEvent() {
-        this.fillRectangle(cd);
+        this.fillRectangle(cd, Color.black);
       }
     };
     System.out.println(clickButton);
@@ -60,6 +60,8 @@ public class App {
         guiObjects.add(clickButton);
       EventHandler event = new EventHandler();
     while (!cd.isClosed()) {
+      Text text = new Text();
+      text.createText(cd, 60.0, 60.0, "hey i am text", false, true);
       guiObjects.addAll(bufferGuiObjects);
       bufferGuiObjects = new ArrayList<>();
       event.getEvent(cd);

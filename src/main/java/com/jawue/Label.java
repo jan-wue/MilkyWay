@@ -92,8 +92,8 @@ public class Label extends GuiObject {
   }
 
   @Override
-  public void fillRectangle(Color cd) {
-    cd.setColor(Color.black);
+  public void fillRectangle(CodeDraw cd, Color color) {
+    cd.setColor(color);
     cd.fillRectangle(this.x, this.y, this.width, this.height);
     cd.setColor(Color.white);
   }
