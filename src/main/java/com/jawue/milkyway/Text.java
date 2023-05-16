@@ -1,9 +1,7 @@
-package com.jawue;
+package com.jawue.milkyway;
 
 import codedraw.CodeDraw;
 import codedraw.TextFormat;
-
-import java.awt.*;
 
 public class Text extends GuiObject {
 

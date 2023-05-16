@@ -1,11 +1,11 @@
-package com.jawue;
+package com.jawue.milkyway;
 
-import codedraw.*;
 import codedraw.Event;
+import codedraw.*;
 
 import java.awt.*;
 
-public class Button extends GuiObject  {
+public class Button extends GuiObject {
   private Double x;
   private Double y;
   private Double width;

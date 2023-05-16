@@ -1,4 +1,4 @@
-package com.jawue;
+package com.jawue.milkyway;
 
 public enum ButtonState {
  NORMAL,
