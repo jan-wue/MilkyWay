@@ -25,11 +25,6 @@ public class App {
         GuiObject label = new Label(400.0, 100.0, 100.0, 200.0, "I got clicked");
         bufferGuiObjects.add(label);
       }
-      public void executeMouseMoveEvent() {
-
-      }
-
-
     };
 
     GuiObject musicButton = new Button( 400.00, 400.0, 100.0,  150.0, "play music", Color.blue, Color.BLACK, Color.yellow) {
@@ -53,20 +48,25 @@ public class App {
         this.fillRectangle(cd, Color.black);
       }
     };
+    Button testiBus = new Button(0.0, 0.0, 40.0, 50.0,"ig bi dr testibus", Color.blue, Color.WHITE, Color.BLACK);
+    guiObjects.add(testiBus);
     System.out.println(clickButton);
     guiObjects.add(musicButton);
 
         guiObjects.add(clickButton);
       EventHandler event = new EventHandler();
+      Layout layout = new Layout(guiObjects, 300.0, 100.0, 50.0, 100.0);
     while (!cd.isClosed()) {
+
       Text text = new Text();
       text.createText(cd, 60.0, 60.0, "hey i am text", false, true);
-      guiObjects.addAll(bufferGuiObjects);
-      bufferGuiObjects = new ArrayList<>();
+      layout.draw(cd);
+      //guiObjects.addAll(bufferGuiObjects);
+      //bufferGuiObjects = new ArrayList<>();
       event.getEvent(cd);
-      for(GuiObject guiObject : guiObjects) {
+      /*for(GuiObject guiObject : guiObjects) {
         guiObject.draw(cd);
-      }
+      }*/
       cd.show(16);
       cd.clear();
     }
