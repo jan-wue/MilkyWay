@@ -19,7 +19,7 @@ public class App {
     // Instantiates a new CodeDraw window with the size of 600x600 pixel
     CodeDraw cd = new CodeDraw();
 
-    GuiObject clickButton = new Button( 50.0, 200.0, 100.0, 200.22, "press me",Color.blue, Color.yellow, Color.green) {
+    GuiObject clickButton = new Button( 50.0, 200.0, 100.0, 200.22, "press me",new ButtonStyle()) {
       @Override
       public void executeMouseClickEvent() {
         GuiObject label = new Label(400.0, 100.0, 100.0, 200.0, "I got clicked");
@@ -27,7 +27,7 @@ public class App {
       }
     };
 
-    GuiObject musicButton = new Button( 400.00, 400.0, 100.0,  150.0, "play music", Color.blue, Color.BLACK, Color.yellow) {
+    GuiObject musicButton = new Button( 400.00, 400.0, 100.0,  150.0, "play music", new ButtonStyle()) {
       @Override
       public void executeMouseClickEvent() {
         String musicPath = "/home/jan/Documents/projects/milkyway/src/main/resources/testMusic.wav";
@@ -44,18 +44,30 @@ public class App {
         }
 
       }
-      public void executeMouseMoveEvent() {
-        this.fillRectangle(cd, Color.black);
-      }
+
     };
-    Button testiBus = new Button(0.0, 0.0, 40.0, 50.0,"ig bi dr testibus", Color.blue, Color.WHITE, Color.BLACK);
+    Button testiBus = new Button(0.0, 0.0, 40.0, 50.0,"ig bi dr testibus", new ButtonStyle() );
     guiObjects.add(testiBus);
     System.out.println(clickButton);
     guiObjects.add(musicButton);
 
         guiObjects.add(clickButton);
+
+        Button tester = new Button(0.0, 0.0, 40.0, 50.0,"ig bi dr tester", new ButtonStyle()) {
+          public void executeMouseClickEvent() {
+            if(clickButton.isEnabled()) {
+              clickButton.setEnabled(false);
+          } else {
+              clickButton.setEnabled(true);
+            }
+          }
+        };
+       guiObjects.add(tester);
+
       EventHandler event = new EventHandler();
       Layout layout = new Layout(guiObjects, 300.0, 100.0, 50.0, 100.0);
+
+
     while (!cd.isClosed()) {
 
       Text text = new Text();

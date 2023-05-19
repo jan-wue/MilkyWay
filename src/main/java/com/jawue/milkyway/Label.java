@@ -75,10 +75,9 @@ public class Label extends GuiObject {
 
   @Override
   public void draw(CodeDraw cd) {
-    cd.setColor(Color.cyan);
+    //@TODO add labelStyle
     cd.drawRectangle(this.x, this.y, this.width, this.height);
     cd.drawText(this.x + 5, this.y + 20, this.text);
-
   }
 
   @Override
@@ -91,18 +90,14 @@ public class Label extends GuiObject {
 
   }
 
-  @Override
-  public void fillRectangle(CodeDraw cd, Color color) {
-    cd.setColor(color);
-    cd.fillRectangle(this.x, this.y, this.width, this.height);
-    cd.setColor(Color.white);
-  }
+
+
   @Override
 
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
 
     boolean isEventInsideButton = mouseX <= (this.x + this.width) && mouseX >= this.x && mouseY <= this.y + this.height && mouseY >= this.y;
-    if(isEventInsideButton) {
+    if (isEventInsideButton) {
       if (event.getClass() == MouseClickEvent.class) {
         setButtonState(ButtonState.ClICKED);
       } else if (event.getClass() == MouseMoveEvent.class) {

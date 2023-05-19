@@ -11,35 +11,21 @@ public class Button extends GuiObject {
   private Double width;
   private Double height;
   private String text;
-  private ButtonState buttonState;
-  private Color normalColor;
-  private Color hoveredColor;
-  private Color clickedColor;
+  private ButtonState buttonState = ButtonState.NORMAL;
+
+  private ButtonStyle buttonStyle;
 
 
-  public Button(Double x, Double y, Double width, Double height, String text, Color normalColor, Color hoveredColor, Color clickedColor) {
+  public Button(Double x, Double y, Double width, Double height, String text, ButtonStyle buttonStyle) {
+
     this.x = x;
     this.y = y;
     this.width = width;
     this.height = height;
     this.text = text;
-    this.buttonState = buttonState;
-    this.normalColor = normalColor;
-    this.hoveredColor = hoveredColor;
-    this.clickedColor = clickedColor;
+    this.buttonStyle = buttonStyle;
   }
 
-  public Color getNormalColor() {
-    return normalColor;
-  }
-
-  public Color getHoveredColor() {
-    return hoveredColor;
-  }
-
-  public Color getClickedColor() {
-    return clickedColor;
-  }
 
   public ButtonState getButtonState() {
     return buttonState;
@@ -90,17 +76,6 @@ public class Button extends GuiObject {
     this.text = text;
   }
 
-  public void setNormalColor(Color normalColor) {
-    this.normalColor = normalColor;
-  }
-
-  public void setHoveredColor(Color hoveredColor) {
-    this.hoveredColor = hoveredColor;
-  }
-
-  public void setClickedColor(Color clickedColor) {
-    this.clickedColor = clickedColor;
-  }
 
   public void setButtonState(ButtonState buttonState) {
     this.buttonState = buttonState;
@@ -108,25 +83,26 @@ public class Button extends GuiObject {
 
   @Override
   public void draw(CodeDraw cd) {
-    cd.drawRectangle(this.x, this.y, this.width, this.height);
-    TextFormat format = cd.getTextFormat();
-    format.setBold(true);
-    if(buttonState == ButtonState.ClICKED) {
-      fillRectangle(cd, this.getClickedColor());
-    } else if(buttonState == ButtonState.HOVERED) {
-      cd.setColor(this.getHoveredColor());
-      fillRectangle(cd, this.getHoveredColor());
-      cd.setColor(Color.black);
-      cd.drawText(x + 10, y + 20, this.text);
+    Color edgeColor = buttonStyle.getNormalEdgeColor();
+    Color fillColor = buttonStyle.getNormalFillColor();
+    Color textColor = buttonStyle.getNormalTextColor();
 
-    } else if (buttonState == ButtonState.NORMAL) {
-      cd.setColor(this.getNormalColor());
-      cd.drawRectangle(this.x, this.y, this.width, this.height);
+    if (buttonState == ButtonState.ClICKED) {
+      edgeColor = buttonStyle.getClickedEdgeColor();
+      fillColor = buttonStyle.getClickedFillColor();
+      textColor = buttonStyle.getClickedTextColor();
+    } else if (buttonState == ButtonState.HOVERED) {
+      edgeColor = buttonStyle.getHoveredEdgeColor();
+      fillColor = buttonStyle.getHoveredFillColor();
+      textColor = buttonStyle.getHoveredTextColor();
 
     }
-    cd.drawText(x + 10, y + 20, this.text);
+    cd.setColor(fillColor);
+    cd.fillRectangle(this.x, this.y, this.width, this.height);
+    cd.setColor(edgeColor);
     cd.drawRectangle(this.x, this.y, this.width, this.height);
-     format = cd.getTextFormat();
+    cd.setColor(textColor);
+    cd.drawText(x + 10, y + 20, this.text);
 
   }
 
@@ -138,35 +114,27 @@ public class Button extends GuiObject {
   }
 
 
-@Override
-  public void fillRectangle(CodeDraw cd, Color color) {
-    cd.setColor(color);
-    cd.fillRectangle(this.x, this.y, this.width, this.height);
-    cd.setColor(color );
-  }
-
   @Override
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
 
     boolean isEventInsideButton = mouseX <= (this.x + this.width) && mouseX >= this.x && mouseY <= this.y + this.height && mouseY >= this.y;
-   if(isEventInsideButton) {
-     if (event.getClass() == MouseClickEvent.class) {
-       setButtonState(ButtonState.ClICKED);
-     } else if (event.getClass() == MouseMoveEvent.class) {
-       setButtonState(ButtonState.HOVERED);
-     }
-   } else { // isEventInsideButton !=
-     buttonState = ButtonState.NORMAL;
-   }
-
-      if (this.buttonState == ButtonState.ClICKED) {
-        this.executeMouseClickEvent();
-      } else if (this.buttonState == ButtonState.HOVERED) {
-        executeMouseMoveEvent();
+    if (isEventInsideButton) {
+      if (event.getClass() == MouseClickEvent.class) {
+        setButtonState(ButtonState.ClICKED);
+      } else if (event.getClass() == MouseMoveEvent.class) {
+        setButtonState(ButtonState.HOVERED);
       }
+    } else { // isEventInsideButton !=
+      buttonState = ButtonState.NORMAL;
+    }
+
+    if (this.buttonState == ButtonState.ClICKED) {
+      this.executeMouseClickEvent();
+    } else if (this.buttonState == ButtonState.HOVERED) {
+      executeMouseMoveEvent();
+    }
 
 
   }
-
 
 }

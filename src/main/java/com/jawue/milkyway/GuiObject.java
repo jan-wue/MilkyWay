@@ -11,11 +11,9 @@ public abstract class GuiObject {
   private Double width;
   private Double height;
   private String text;
-  private ButtonState buttonState;
 
-  public ButtonState getButtonState() {
-    return buttonState;
-  }
+  protected boolean enabled = true;
+
 
   public Double getX() {
     return x;
@@ -53,9 +51,6 @@ public abstract class GuiObject {
     this.height = height;
   }
 
-  public void setButtonState(ButtonState buttonState) {
-    this.buttonState = buttonState;
-  }
 
   public void setText(String text) {
     this.text = text;
@@ -73,15 +68,18 @@ public abstract class GuiObject {
   public void executeMouseMoveEvent() {
 
   }
-  public void fillRectangle(Color cd, Color color) {
 
-  }
 
-  public  void fillRectangle(CodeDraw cd, Color color) {
-
-  }
 
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
 
+  }
+
+  public boolean isEnabled() {
+    return enabled;
+  }
+
+  public void setEnabled(boolean enabled) {
+    this.enabled = enabled;
   }
 }
