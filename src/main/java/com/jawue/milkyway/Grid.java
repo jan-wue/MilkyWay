@@ -5,22 +5,19 @@ import codedraw.Event;
 
 import java.awt.*;
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
-import java.util.stream.IntStream;
 
 public class Grid extends GuiObject {
   Double x = 50.00;
   Double y = 50.0;
   Double width = 900.0;
   Double height = 300.0;
+  private final Double MARGIN = 20.00;
   List<GuiObject> buttonList1 = new ArrayList<>();
   List<GuiObject> buttonList2 = new ArrayList<>();
   List<GuiObject> buttonList3 = new ArrayList<>();
   List<GuiObject> layouts = new ArrayList<>();
-  ButtonStyle buttonStyle = new ButtonStyle(Color.black, Color.WHITE, Color.BLACK, Color.WHITE, Color.BLUE, Color.BLACK, Color.WHITE, Color.YELLOW, Color.BLACK);
-
-
+  ButtonStyle buttonStyle = new ButtonStyle(Color.WHITE, Color.WHITE, Color.BLACK, Color.WHITE, Color.BLUE, Color.BLACK, Color.WHITE, Color.YELLOW, Color.BLACK);
 
 
   public Grid() {
@@ -38,7 +35,8 @@ public class Grid extends GuiObject {
   }
 
   public void draw(CodeDraw cd) {
-    for(GuiObject layout : layouts) {
+    createAndDrawLines(cd);
+    for (GuiObject layout : layouts) {
       layout.draw(cd);
     }
   }
@@ -46,21 +44,22 @@ public class Grid extends GuiObject {
   @Override
 
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
-    for(GuiObject layout : layouts) {
+    for (GuiObject layout : layouts) {
       layout.handleEvent(mouseX, mouseY, event);
     }
   }
 
   public void createLayouts() {
     double y = this.y;
+    double distanceBetweenLayouts = 10;
     List<GuiObject> buttonList = buttonList1;
     for (int i = 0; i < 3; i++) {
       if (i == 1) {
-        y = this.y + this.height / 3;
+        y = this.y + this.height / 3 + distanceBetweenLayouts;
         buttonList = buttonList2;
       }
       if (i == 2) {
-        y = this.y + this.height / 3 * 2;
+        y = this.y + (this.height / 3 * 2) + distanceBetweenLayouts * 2 ;
         buttonList = buttonList3;
       }
       Layout layout = new Layout(buttonList, this.width / 3, this.height / 3, this.x, y);
@@ -80,10 +79,38 @@ public class Grid extends GuiObject {
       }
     }
   }
-    public void drawLines(CodeDraw cd) {
 
-    }
+  public void createAndDrawLines(CodeDraw cd) {
+    double buttonWidth = buttonList1.get(0).getWidth();
+    double xStart = this.x + buttonWidth + MARGIN + MARGIN / 2;
+    double xEnd = xStart;
+    double yStart = this.y - 10;
+    double yEnd = yStart + this.height + 30;
 
+    Line line1Vertical = new Line(xStart, xEnd, yStart, yEnd);
+    line1Vertical.draw(cd);
+
+    xStart = this.x + MARGIN * 2.5 + 2 * buttonWidth;
+    xEnd = xStart;
+
+    Line line2Vertical = new Line(xStart, xEnd, yStart, yEnd);
+    line2Vertical.draw(cd);
+
+    xStart = MARGIN + this.x;
+    xEnd = xStart + buttonWidth * 3 + 3 * MARGIN;
+    double buttonHeight = buttonList1.get(0).getHeight();
+    yStart = this.y + 5 + buttonHeight;
+    yEnd = yStart;
+
+    Line lineHorizontal1 = new Line(xStart, xEnd, yStart, yEnd);
+    lineHorizontal1.draw(cd);
+
+    yStart = this.y + 15 + buttonHeight * 2;
+    yEnd = yStart;
+
+    Line lineHorizontal2 = new Line(xStart, xEnd, yStart, yEnd);
+    lineHorizontal2.draw(cd);
+  }
 
 
 }

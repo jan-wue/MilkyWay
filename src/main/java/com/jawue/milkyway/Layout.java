@@ -47,7 +47,7 @@ public class Layout extends GuiObject {
       guiObject.setX(guiX);
       guiObject.setWidth(this.width / numberOfGuiObjects);
       guiX += guiObject.getWidth() + margin;
-      guiObject.setHeight(this.height - 10.0);
+      guiObject.setHeight(this.height);
       guiObject.setY(guyY);
     }
 

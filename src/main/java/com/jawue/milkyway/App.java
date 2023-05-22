@@ -66,7 +66,6 @@ public class App {
     Grid board = new Grid();
     guiObjects.add(board);
     while (!cd.isClosed()) {
-
       //guiObjects.addAll(bufferGuiObjects);
       //bufferGuiObjects = new ArrayList<>();
       event.getEvent(cd);
