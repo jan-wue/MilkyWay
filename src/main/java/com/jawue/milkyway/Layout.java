@@ -1,6 +1,7 @@
 package com.jawue.milkyway;
 
 import codedraw.CodeDraw;
+import codedraw.Event;
 
 import java.awt.*;
 import java.util.ArrayList;
@@ -15,6 +16,7 @@ public class Layout extends GuiObject {
 
 
   public Layout() {
+
   }
 
   public Layout(List<GuiObject> guiObjects, Double width, Double height,Double x, Double y ) {
@@ -49,6 +51,11 @@ public class Layout extends GuiObject {
       guiObject.setY(guyY);
     }
 
+  }
+  public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
+    for (GuiObject guiObject : this.guiObjects) {
+      guiObject.handleEvent(mouseX, mouseY, event);
+    }
   }
 
 

@@ -16,6 +16,10 @@ public class Button extends GuiObject {
   private ButtonStyle buttonStyle;
 
 
+  public Button() {
+    this(20.0, 50.0, 50.0, 50.0, "", new ButtonStyle());
+  }
+
   public Button(Double x, Double y, Double width, Double height, String text, ButtonStyle buttonStyle) {
 
     this.x = x;
