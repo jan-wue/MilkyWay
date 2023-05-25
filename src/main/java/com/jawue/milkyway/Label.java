@@ -94,7 +94,7 @@ public class Label extends GuiObject {
 
   @Override
 
-  public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
+  public void handleEvent( Integer mouseX, Integer mouseY, Event event) {
 
     boolean isEventInsideButton = mouseX <= (this.x + this.width) && mouseX >= this.x && mouseY <= this.y + this.height && mouseY >= this.y;
     if (isEventInsideButton) {

@@ -1,6 +1,7 @@
 package com.jawue.milkyway;
 
 import codedraw.CodeDraw;
+import codedraw.Image;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;

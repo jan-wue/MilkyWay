@@ -7,6 +7,7 @@ import java.awt.*;
 import java.util.ArrayList;
 import java.util.List;
 
+
 public class Grid extends GuiObject {
   Double x = 50.00;
   Double y = 50.0;
@@ -18,6 +19,12 @@ public class Grid extends GuiObject {
   List<GuiObject> buttonList3 = new ArrayList<>();
   List<GuiObject> layouts = new ArrayList<>();
   ButtonStyle buttonStyle = new ButtonStyle(Color.WHITE, Color.WHITE, Color.BLACK, Color.WHITE, Color.BLUE, Color.BLACK, Color.WHITE, Color.YELLOW, Color.BLACK);
+  private List<com.jawue.milkyway.Image> images = new ArrayList<>();
+
+  private String pathToXImage = "/home/jan/Documents/projects/milkyway/src/main/resources/text126.png";
+
+  private String pathToOImage = "/home/jan/Documents/projects/milkyway/src/main/resources/text126.png";
+  String[][] board = new String[3][3];
 
 
   public Grid() {
@@ -39,6 +46,16 @@ public class Grid extends GuiObject {
     for (GuiObject layout : layouts) {
       layout.draw(cd);
     }
+    createImagesAndAddToList();
+    for (com.jawue.milkyway.Image image : images) {
+      codedraw.Image cdImage;
+      if (image.getPlayerChar().equals("X")) {
+        cdImage = codedraw.Image.fromFile(pathToXImage);
+      } else {
+        cdImage = codedraw.Image.fromFile(pathToOImage);
+      }
+      cd.drawImage(image.getX(), image.getY(), image.getWidth(), image.getHeight(), cdImage);
+    }
   }
 
   @Override
@@ -59,7 +76,7 @@ public class Grid extends GuiObject {
         buttonList = buttonList2;
       }
       if (i == 2) {
-        y = this.y + (this.height / 3 * 2) + distanceBetweenLayouts * 2 ;
+        y = this.y + (this.height / 3 * 2) + distanceBetweenLayouts * 2;
         buttonList = buttonList3;
       }
       Layout layout = new Layout(buttonList, this.width / 3, this.height / 3, this.x, y);
@@ -68,11 +85,18 @@ public class Grid extends GuiObject {
   }
 
   public void createButtons() {
-    for (int i = 0; i < 9; i++) {
-      Button button = new Button(0.0, 0.0, 0.0, 0.0, "", this.buttonStyle);
-      if (i < 3) {
+    for (int i = 1; i <= 9; i++) {
+      Button button = new Button("button" + String.valueOf(i), 0.0, 0.0, 0.0, 0.0, "", this.buttonStyle) {
+
+        @Override
+        public void executeMouseClickEvent() {
+          com.jawue.milkyway.Image playerCharImage = new com.jawue.milkyway.Image(this.getButtonName(), this.getX(), this.getY(), this.getWidth(), this.getHeight());
+          images.add(playerCharImage);
+        }
+      };
+      if (i <= 3) {
         buttonList1.add(button);
-      } else if (i < 6) {
+      } else if (i <= 6) {
         buttonList2.add(button);
       } else {
         buttonList3.add(button);
@@ -112,5 +136,35 @@ public class Grid extends GuiObject {
     lineHorizontal2.draw(cd);
   }
 
+  public void createImagesAndAddToList() {
+    List<GuiObject> buttonList = buttonList1;
+    for (int i = 0; i < board.length; i++) {
+      if (i == 1) {
+        buttonList = buttonList2;
+      }
+      if (i == 2) {
+        buttonList = buttonList3;
+      }
+
+      for (int j = 0; j < board[i].length; j++) {
+        Button button = (Button) buttonList.get(j);
+        board[i][j] = "X";
+        if (board[i][j].equals("O")) {
+          com.jawue.milkyway.Image image = new com.jawue.milkyway.Image("O", button.getX(), button.getY(), button.getWidth(), button.getHeight());
+          this.images.add(image);
+        } else if (board[i][j].equals("X")) {
+          com.jawue.milkyway.Image image = new com.jawue.milkyway.Image("X", button.getX(), button.getY(), button.getWidth(), button.getHeight());
+          this.images.add(image);
+        }
+
+      }
+
+    }
+
+  }
+
 
 }
+
+
+

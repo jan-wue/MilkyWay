@@ -6,6 +6,7 @@ import codedraw.*;
 import java.awt.*;
 
 public class Button extends GuiObject {
+  private String buttonName;
   private Double x;
   private Double y;
   private Double width;
@@ -15,6 +16,15 @@ public class Button extends GuiObject {
 
   private ButtonStyle buttonStyle;
 
+  public Button(String buttonName, Double x, Double y, Double width, Double height, String text, ButtonStyle buttonStyle) {
+    this.buttonName = buttonName;
+    this.x = x;
+    this.y = y;
+    this.width = width;
+    this.height = height;
+    this.text = text;
+    this.buttonStyle = buttonStyle;
+  }
 
   public Button() {
     this(20.0, 50.0, 50.0, 50.0, "", new ButtonStyle());
@@ -53,6 +63,14 @@ public class Button extends GuiObject {
 
   public String getText() {
     return text;
+  }
+
+  public String getButtonName() {
+    return buttonName;
+  }
+
+  public void setButtonName(String buttonName) {
+    this.buttonName = buttonName;
   }
 
   @Override
@@ -140,5 +158,6 @@ public class Button extends GuiObject {
 
 
   }
+
 
 }
