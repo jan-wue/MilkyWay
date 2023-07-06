@@ -34,7 +34,7 @@ GuiObject musicButton = new Button(400.00, 400.0, 100.0, 150.0, "play music", ne
 in order to draw the button the user has to add the button to the static ArrayList guiObjects.
 `App.guiObjects.add(musicButton);`
 if you run the main method following content will be displayed: 
-![Alt text](src/main/resources/images/milkyway.png?raw=true "Title")
+![Milkyway Button Example](src/main/resources/images/milkyway.png?raw=true "Title")
 
 ### Label
 A label is a rectangle wich can display text. 
@@ -56,7 +56,7 @@ List<GuiObject> buttonList = new ArrayList<>(Arrays.asList(new Button("button1")
     Layout layout = new Layout(buttonList, 450.0, 100.0, 20.0, 200.0);
     App.guiObjects.add(layout);
 ```
-[Alt text](src/main/resources/images/layout.png?raw=true "Layout")
+![Milkiway Layout Screenshot](src/main/resources/images/layout.png?raw=true "Layout")
 
 
 ### Text 
