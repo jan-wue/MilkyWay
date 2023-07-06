@@ -1,27 +1,32 @@
 package com.jawue.milkyway;
 
 import codedraw.CodeDraw;
-import codedraw.Image;
 
 import javax.sound.sampled.AudioInputStream;
 import javax.sound.sampled.AudioSystem;
 import javax.sound.sampled.Clip;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 
 
-
 public class App {
-  static List<GuiObject> guiObjects = new ArrayList<>();
-  static List<GuiObject> bufferGuiObjects = new ArrayList<>();
+  public static List<GuiObject> guiObjects = new ArrayList<>();
+  public static List<GuiObject> bufferGuiObjects = new ArrayList<>();
+  public CodeDraw cd = new CodeDraw();
 
+  public EventHandler event = new EventHandler();
 
   public static void main(String[] args) {
+    App app = new App();
+    app.run();
+  }
+  public void run() {
     // Instantiates a new CodeDraw window with the size of 600x600 pixel
-    CodeDraw cd = new CodeDraw();
 
-    GuiObject clickButton = new Button(50.0, 200.0, 100.0, 200.22, "press me", new ButtonStyle()) {
+
+   /* GuiObject clickButton = new Button(50.0, 200.0, 100.0, 200.22, "press me", new ButtonStyle()) {
       @Override
       public void executeMouseClickEvent() {
         GuiObject label = new Label(400.0, 100.0, 100.0, 200.0, "I got clicked");
@@ -46,13 +51,14 @@ public class App {
 
       }
 
+
     };
+
     Button testiBus = new Button(0.0, 0.0, 40.0, 50.0, "ig bi dr testibus", new ButtonStyle());
     System.out.println(clickButton);
-    guiObjects.add(musicButton);
 
 
-    Button tester = new Button(0.0, 0.0, 40.0, 50.0, "ig bi dr tester", new ButtonStyle()) {
+    Button tester = new Button(20.0, 50.0, 40.0, 50.0, "ig bi dr tester", new ButtonStyle()) {
       public void executeMouseClickEvent() {
         if (clickButton.isEnabled()) {
           clickButton.setEnabled(false);
@@ -61,20 +67,31 @@ public class App {
         }
       }
     };
+    App.guiObjects.add(musicButton);
+    App.guiObjects.clear();
+    List<GuiObject> buttonList = new ArrayList<>(Arrays.asList(new Button("button1"), new Button("button2"), new Button("button3")));
+    Layout layout = new Layout(buttonList, 450.0, 100.0, 20.0, 200.0);
+    App.guiObjects.add(layout);
 
-    EventHandler event = new EventHandler();
+    while (true) {
+     draw();
+    }
+  }
 
-    Grid board = new Grid();
-    guiObjects.add(board);
-    while (!cd.isClosed()) {
-      //guiObjects.addAll(bufferGuiObjects);
-      //bufferGuiObjects = new ArrayList<>();
-      event.getEvent(cd);
+ List<GuiObject> buttonList = new ArrayList<>(Arrays.asList(new Button("button1"), new Button("button2"), new Button("button3")));
+  Layout layout = new Layout(buttonList, 250.0, 250.0, 300.0, 400.0);
+  */
+
+    public void draw () {
+      event.handleEvents(cd);
       for (GuiObject guiObject : guiObjects) {
         guiObject.draw(cd);
       }
       cd.show(16);
       cd.clear();
+
+
     }
   }
+
 }

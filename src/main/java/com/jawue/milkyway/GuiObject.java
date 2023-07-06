@@ -3,7 +3,6 @@ package com.jawue.milkyway;
 import codedraw.CodeDraw;
 import codedraw.Event;
 
-import java.awt.*;
 
 public abstract class GuiObject {
   private Double x;

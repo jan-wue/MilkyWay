@@ -3,29 +3,36 @@ package com.jawue.milkyway;
 import codedraw.CodeDraw;
 import codedraw.MouseClickEvent;
 import codedraw.MouseMoveEvent;
+import codedraw.WindowCloseEvent;
 
-public class EventHandler {
-  public void getEvent(CodeDraw cd) {
+public class EventHandler  {
+  CloseHandler closeHandler;
+  public void handleEvents(CodeDraw cd) {
     for (var e : cd.getEventScanner()) {
       for (GuiObject guiObject : App.guiObjects) {
-        switch (e) {
-          case MouseMoveEvent a -> {
+          if(e instanceof MouseMoveEvent) {
+            MouseMoveEvent event = (MouseMoveEvent) e;
             if (guiObject.isEnabled()) {
-              guiObject.handleEvent(a.getX(), a.getY(), a);
+              guiObject.handleEvent(event.getX(), event.getY(), event);
             }
           }
-          case MouseClickEvent a -> {
+          if(e instanceof MouseClickEvent) {
             if (guiObject.isEnabled()) {
-              guiObject.handleEvent(a.getX(), a.getY(), a);
+              MouseClickEvent event = (MouseClickEvent) e;
+              guiObject.handleEvent(event.getX(), event.getY(), event);
+            }
+          }
+          if(e instanceof WindowCloseEvent) {
+            if(closeHandler != null) {
+              closeHandler.handleCloseEvent((WindowCloseEvent) e);
             }
           }
 
-
-          default -> {
-          }
-        }
       }
     }
 
+  }
+  public void onClose(CloseHandler closeHandler) {
+    this.closeHandler = closeHandler;
   }
 }

@@ -54,6 +54,9 @@ public class Layout extends GuiObject {
   }
   public void handleEvent(Integer mouseX, Integer mouseY, Event event) {
     for (GuiObject guiObject : this.guiObjects) {
+      if(!guiObject.isEnabled()) {
+        continue;
+      }
       guiObject.handleEvent(mouseX, mouseY, event);
     }
   }

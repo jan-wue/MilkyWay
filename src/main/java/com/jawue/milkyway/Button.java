@@ -26,8 +26,8 @@ public class Button extends GuiObject {
     this.buttonStyle = buttonStyle;
   }
 
-  public Button() {
-    this(20.0, 50.0, 50.0, 50.0, "", new ButtonStyle());
+  public Button(String text) {
+    this(20.0, 50.0, 200.0, 100.0, text, new ButtonStyle());
   }
 
   public Button(Double x, Double y, Double width, Double height, String text, ButtonStyle buttonStyle) {
@@ -132,7 +132,6 @@ public class Button extends GuiObject {
   @Override
   public void executeMouseClickEvent() {
 
-
   }
 
 
@@ -155,9 +154,12 @@ public class Button extends GuiObject {
     } else if (this.buttonState == ButtonState.HOVERED) {
       executeMouseMoveEvent();
     }
-
-
   }
 
+  @Override
+  public void setEnabled(boolean enabled) {
+    super.setEnabled(enabled);
+    this.buttonState = ButtonState.NORMAL;
+  }
 
 }
